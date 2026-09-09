@@ -1,0 +1,414 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="100 original Lean Six Sigma Black Belt practice questions with instant answer checking.">
+  <title>Lean Six Sigma Black Belt Practice Exam</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #102a43;
+      --muted: #52667a;
+      --paper: #f4f7f8;
+      --card: #ffffff;
+      --line: #d8e1e8;
+      --navy: #0b3558;
+      --cyan: #00a6a6;
+      --cyan-dark: #007c7c;
+      --correct: #137333;
+      --correct-bg: #e9f7ed;
+      --wrong: #b42318;
+      --wrong-bg: #fff0ee;
+      --warn: #9a6700;
+      --warn-bg: #fff7d6;
+      --shadow: 0 14px 34px rgba(17, 42, 67, .09);
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        linear-gradient(115deg, rgba(0, 166, 166, .08), transparent 42rem),
+        var(--paper);
+      font: 16px/1.55 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    header {
+      color: white;
+      background: var(--navy);
+      border-bottom: 5px solid var(--cyan);
+    }
+
+    .header-inner, main { width: min(920px, calc(100% - 32px)); margin: auto; }
+    .header-inner { padding: 34px 0 30px; }
+
+    .eyebrow {
+      margin: 0 0 6px;
+      color: #82eeee;
+      font-size: .82rem;
+      font-weight: 800;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    h1 { margin: 0; max-width: 760px; font-size: clamp(1.8rem, 4vw, 3rem); line-height: 1.12; }
+    header p { margin: 12px 0 0; max-width: 720px; color: #d6e7f3; }
+
+    .status {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: grid;
+      grid-template-columns: 1fr auto auto;
+      gap: 16px;
+      align-items: center;
+      padding: 14px 16px;
+      margin: 22px 0;
+      background: rgba(255, 255, 255, .96);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+    }
+
+    .progress-copy { min-width: 0; }
+    .progress-copy strong { display: block; }
+    .progress-copy span { color: var(--muted); font-size: .9rem; }
+    progress { width: 100%; height: 9px; accent-color: var(--cyan-dark); }
+
+    button {
+      min-height: 44px;
+      padding: 10px 18px;
+      border: 0;
+      border-radius: 9px;
+      font: inherit;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    button:focus-visible, input:focus-visible + span { outline: 3px solid #5cc8ff; outline-offset: 3px; }
+    .verify { color: white; background: var(--cyan-dark); }
+    .verify:hover { background: #006767; }
+    .reset { color: var(--navy); background: #e9eff4; }
+    .reset:hover { background: #dce6ed; }
+
+    .notice {
+      display: none;
+      margin: 0 0 22px;
+      padding: 16px 18px;
+      border-radius: 12px;
+      font-weight: 700;
+    }
+
+    .notice.show { display: block; }
+    .notice.success { color: var(--correct); background: var(--correct-bg); border: 1px solid #a8d9b5; }
+    .notice.result { color: var(--navy); background: #e9f4fb; border: 1px solid #a9d4ed; }
+
+    .section-title {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      margin: 34px 0 14px;
+      color: var(--navy);
+      font-size: 1.25rem;
+    }
+
+    .section-title::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+
+    fieldset {
+      margin: 0 0 18px;
+      padding: 22px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      box-shadow: 0 5px 16px rgba(17, 42, 67, .045);
+    }
+
+    fieldset.correct { border-color: #72bd86; box-shadow: 0 0 0 2px var(--correct-bg); }
+    fieldset.wrong { border-color: #ef9a92; box-shadow: 0 0 0 2px var(--wrong-bg); }
+    fieldset.unanswered { border-color: #d7b35b; box-shadow: 0 0 0 2px var(--warn-bg); }
+
+    legend { width: 100%; padding: 0 4px; font-weight: 800; }
+    .number { color: var(--cyan-dark); }
+    .choices { display: grid; gap: 9px; margin-top: 15px; }
+
+    label {
+      display: grid;
+      grid-template-columns: 22px 1fr;
+      gap: 10px;
+      align-items: start;
+      padding: 11px 13px;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      cursor: pointer;
+    }
+
+    label:hover { background: #f5fafc; border-color: #aabdc9; }
+    input { margin: 4px 0 0; accent-color: var(--cyan-dark); }
+    label.answer-correct { color: var(--correct); background: var(--correct-bg); border-color: #72bd86; }
+    label.answer-wrong { color: var(--wrong); background: var(--wrong-bg); border-color: #ef9a92; }
+
+    .feedback {
+      display: none;
+      margin: 14px 0 0;
+      padding: 12px 14px;
+      border-radius: 9px;
+      color: var(--muted);
+      background: #f4f7f8;
+    }
+
+    .feedback.show { display: block; }
+    .feedback strong { color: var(--ink); }
+
+    footer { padding: 34px 16px 48px; color: var(--muted); text-align: center; }
+
+    @media (max-width: 680px) {
+      .status { grid-template-columns: 1fr 1fr; }
+      .progress-copy { grid-column: 1 / -1; }
+      button { width: 100%; }
+      fieldset { padding: 18px 14px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <p class="eyebrow">Practice Exam · 100 Questions</p>
+      <h1>Lean Six Sigma Black Belt</h1>
+      <p>Select one answer for each question. Use “Verify all answers” to see your score, the correct answers, and short explanations. These are original practice questions, not official or leaked exam questions.</p>
+    </div>
+  </header>
+
+  <main>
+    <div class="status" aria-label="Quiz controls">
+      <div class="progress-copy">
+        <strong id="progressText">0 of 100 answered</strong>
+        <progress id="progress" value="0" max="100">0%</progress>
+        <span id="scoreText">Complete the questions, then verify your answers.</span>
+      </div>
+      <button class="reset" id="resetButton" type="button">Reset</button>
+      <button class="verify" id="verifyButton" type="button">Verify all answers</button>
+    </div>
+
+    <div class="notice" id="notice" role="status" aria-live="polite"></div>
+    <form id="quiz"></form>
+  </main>
+
+  <footer>Lean Six Sigma Black Belt practice set · Use the explanations to review weak topics.</footer>
+
+  <script>
+    const questions = [
+      {s:"Define",q:"What is the main purpose of a project charter?",o:["Authorize the project and define its scope","List every possible root cause","Set final control limits","Approve every process change"],a:0,e:"The charter formally starts the project and states the problem, goal, scope, team, and business case."},
+      {s:"Define",q:"Which statement is the best problem statement?",o:["Customer service must improve","Late deliveries increased from 4% to 11% between January and March in the eastern region","The warehouse team is careless","Install a new routing system by June"],a:1,e:"A good problem statement is specific, measurable, time-bound, and free of assumed causes or solutions."},
+      {s:"Define",q:"In a SIPOC diagram, what does the letter O represent?",o:["Objective","Operation","Output","Owner"],a:2,e:"SIPOC means Suppliers, Inputs, Process, Outputs, and Customers."},
+      {s:"Define",q:"Which item is most likely a critical-to-quality requirement?",o:["The project has six team members","The invoice is accurate and arrives within two business days","The sponsor attends every meeting","The process map uses standard symbols"],a:1,e:"A CTQ requirement translates customer needs into a measurable product or service characteristic."},
+      {s:"Define",q:"What is the primary role of the project sponsor?",o:["Collect all process data","Remove barriers and provide strategic support","Create every control chart","Run each team meeting"],a:1,e:"The sponsor gives direction, resources, authority, and help with barriers."},
+      {s:"Define",q:"Which tool best organizes customer comments into needs and measurable requirements?",o:["Voice-of-the-customer analysis","Gage R&R study","EWMA chart","Residual plot"],a:0,e:"Voice-of-the-customer analysis converts customer statements into needs and CTQ requirements."},
+      {s:"Define",q:"Which project is the best DMAIC candidate?",o:["Design a new product with no existing process","Reduce defects in an existing, measurable order-entry process","Select a new company logo","Create a five-year corporate vision"],a:1,e:"DMAIC improves an existing process with a measurable performance gap."},
+      {s:"Define",q:"What does the business case explain?",o:["Why the project matters to the organization","Which control chart must be used","How each operator will be trained","What the final p-value will be"],a:0,e:"The business case connects the problem to financial, customer, regulatory, or strategic value."},
+      {s:"Define",q:"A team uses an in-scope and out-of-scope statement mainly to prevent what?",o:["Measurement error","Scope creep","Type II error","Common-cause variation"],a:1,e:"Clear boundaries stop the project from expanding beyond its approved purpose."},
+      {s:"Define",q:"Which metric is a primary outcome or Y in the relationship Y = f(X)?",o:["Oven temperature","Supplier lead time","Final product defect rate","Operator experience"],a:2,e:"Y is the process output or outcome. The X variables are possible inputs or causes."},
+      {s:"Define",q:"Which stakeholder has high influence and high interest in a project?",o:["Monitor with minimal effort","Keep informed only","Manage closely","Exclude from communication"],a:2,e:"Stakeholders with high influence and high interest require close engagement."},
+      {s:"Define",q:"What is the purpose of a high-level process map during Define?",o:["Show the major process steps and boundaries","Calculate process capability","Prove causation","Set sampling frequencies"],a:0,e:"A high-level map creates a shared view of the process without excessive detail."},
+      {s:"Define",q:"Which goal statement is SMART?",o:["Improve quality soon","Reduce billing errors","Reduce billing errors from 8% to 3% by 30 November without increasing cycle time","Make customers happier than before"],a:2,e:"A SMART goal is specific, measurable, achievable, relevant, and time-bound."},
+      {s:"Define",q:"What is an operational definition?",o:["A measurable and unambiguous description of a term or event","A list of project risks","A financial approval form","A statement of the preferred solution"],a:0,e:"An operational definition lets different people identify or measure the same condition consistently."},
+      {s:"Define",q:"What does the Pareto principle suggest?",o:["All causes have equal effects","A small number of causes often account for most of the effect","Every process follows a normal distribution","Inspection removes all defects"],a:1,e:"Pareto analysis focuses attention on the vital few categories that create most of the problem."},
+      {s:"Define",q:"Which cost is a prevention cost?",o:["Warranty replacement","Final inspection","Training operators in mistake prevention","Customer complaint handling"],a:2,e:"Prevention costs are spent to stop defects before they occur."},
+      {s:"Define",q:"Which item belongs in a communication plan?",o:["Audience, message, owner, method, and frequency","Only the project budget","Only the final solution","Every raw data value"],a:0,e:"A communication plan defines what will be communicated, to whom, by whom, how, and when."},
+      {s:"Define",q:"What is the best first response when two stakeholders define “late” differently?",o:["Average their definitions","Create and agree on one operational definition","Remove the metric","Use the sponsor's private definition"],a:1,e:"A common operational definition is necessary before reliable measurement and analysis."},
+      {s:"Define",q:"Which diagram shows how customer needs connect to process inputs and outputs at a high level?",o:["SIPOC","Box plot","CUSUM chart","Regression interval plot"],a:0,e:"SIPOC connects suppliers and inputs to the process, outputs, and customers."},
+      {s:"Define",q:"A project benefit that avoids future hiring is usually classified as what?",o:["Hard revenue","Cost avoidance","Sunk cost","Appraisal cost"],a:1,e:"Cost avoidance prevents a future expense but may not reduce the current accounting cost."},
+
+      {s:"Measure",q:"Which scale of measurement has equal intervals and a true zero?",o:["Nominal","Ordinal","Interval","Ratio"],a:3,e:"Ratio data have ordered equal intervals and a meaningful zero, so ratios are valid."},
+      {s:"Measure",q:"Which sampling method gives every unit an equal chance of selection?",o:["Convenience sampling","Simple random sampling","Judgment sampling","Quota sampling"],a:1,e:"Simple random sampling uses random selection with an equal selection chance for each unit."},
+      {s:"Measure",q:"A scale gives nearly the same wrong value each time. Which property is poor?",o:["Precision","Accuracy","Resolution","Repeatability only"],a:1,e:"The readings are consistent but biased from the true value, so accuracy is poor."},
+      {s:"Measure",q:"In a Gage R&R study, repeatability measures variation caused by what?",o:["Different appraisers","The measurement device under the same conditions","Different suppliers","Part-to-part differences"],a:1,e:"Repeatability is equipment variation when the same appraiser measures the same part repeatedly."},
+      {s:"Measure",q:"In a Gage R&R study, reproducibility measures variation caused mainly by what?",o:["Different appraisers or measurement conditions","One device reading one part repeatedly","Natural part differences","Customer requirements"],a:0,e:"Reproducibility is variation between appraisers or other reproducible measurement conditions."},
+      {s:"Measure",q:"A process mean is 50, the standard deviation is 2, and specification limits are 44 and 56. What is Cp?",o:["0.50","1.00","1.50","2.00"],a:1,e:"Cp = (USL − LSL) / (6σ) = 12 / 12 = 1.00."},
+      {s:"Measure",q:"A process has Cp = 1.50 and Cpk = 0.80. What is the best conclusion?",o:["The process is centered and capable","The process could be capable, but it is off-center","The process has no variation","The specification limits equal the control limits"],a:1,e:"Cp shows potential capability. The lower Cpk shows that the mean is too close to one specification limit."},
+      {s:"Measure",q:"Which control chart is suitable for individual continuous measurements collected one at a time?",o:["I-MR chart","p chart","c chart","np chart"],a:0,e:"An individuals and moving-range chart is used when the rational subgroup size is one."},
+      {s:"Measure",q:"Which chart monitors the proportion defective when sample size can change?",o:["np chart","p chart","c chart","X-bar chart"],a:1,e:"A p chart monitors a fraction or proportion defective and can support varying sample sizes."},
+      {s:"Measure",q:"Which chart monitors the number of defects per unit when the opportunity area can change?",o:["u chart","c chart","p chart","R chart"],a:0,e:"A u chart monitors defects per unit when the sample size or opportunity area varies."},
+      {s:"Measure",q:"What does a stable control chart indicate?",o:["The process meets specifications","Only common-cause variation is evident","No variation exists","Every output is defect-free"],a:1,e:"Statistical stability means the observed variation is consistent with common causes."},
+      {s:"Measure",q:"Control limits are calculated mainly from what?",o:["Customer specifications","Observed process variation","The annual budget","Competitor performance"],a:1,e:"Control limits describe expected process behavior and come from process data, not customer specifications."},
+      {s:"Measure",q:"Which statistic is most resistant to extreme values?",o:["Mean","Range","Median","Variance"],a:2,e:"The median depends on order and is less affected by extreme values than the mean."},
+      {s:"Measure",q:"A right-skewed distribution normally has which relationship?",o:["Mean is less than median","Mean is greater than median","Mean always equals zero","Median is greater than the maximum"],a:1,e:"High values in the right tail usually pull the mean above the median."},
+      {s:"Measure",q:"What does standard deviation describe?",o:["The center of a process only","The spread of observations around the mean","The customer specification width","The number of defect types"],a:1,e:"Standard deviation is a measure of variation around the mean."},
+      {s:"Measure",q:"What is the defect-per-unit value when 120 defects are found in 400 units?",o:["0.03","0.30","3.00","30.00"],a:1,e:"DPU = number of defects / number of units = 120 / 400 = 0.30."},
+      {s:"Measure",q:"A process makes 2,000 units with 5 defect opportunities each and finds 50 defects. What is DPMO?",o:["500","5,000","25,000","50,000"],a:1,e:"DPMO = 50 / (2,000 × 5) × 1,000,000 = 5,000."},
+      {s:"Measure",q:"First-pass yield is 90% at step 1, 95% at step 2, and 80% at step 3. What is rolled throughput yield?",o:["26.5%","68.4%","80.0%","88.3%"],a:1,e:"RTY = 0.90 × 0.95 × 0.80 = 0.684, or 68.4%."},
+      {s:"Measure",q:"Which data collection problem creates selection bias?",o:["Sampling only easy-to-reach customers","Using a calibrated instrument","Defining defects before collection","Randomly selecting transaction IDs"],a:0,e:"Convenience samples can systematically exclude important parts of the population."},
+      {s:"Measure",q:"What is stratification used for?",o:["Combine all sources into one average","Separate data by meaningful sources such as shift, machine, or supplier","Remove all outliers","Set specification limits"],a:1,e:"Stratification can reveal patterns hidden in aggregated data."},
+
+      {s:"Analyze",q:"Which tool is used to explore possible causes under categories such as methods, machines, people, and materials?",o:["Fishbone diagram","Run chart","SIPOC","Control plan"],a:0,e:"A fishbone, or cause-and-effect, diagram organizes possible causes into logical categories."},
+      {s:"Analyze",q:"What is the purpose of the 5 Whys technique?",o:["Estimate sample size","Move from a symptom toward a root cause","Calculate capability","Rank customer needs"],a:1,e:"Repeatedly asking why helps the team trace a causal chain below the visible symptom."},
+      {s:"Analyze",q:"Which statement about correlation is correct?",o:["Strong correlation always proves causation","Correlation measures association, not proof of causation","Zero correlation proves that variables are identical","Correlation applies only to attribute data"],a:1,e:"Correlation can show a relationship, but other variables or reverse causation can explain it."},
+      {s:"Analyze",q:"A correlation coefficient of −0.92 indicates what?",o:["A strong negative linear relationship","A weak positive relationship","No relationship of any type","A 92% defect rate"],a:0,e:"A value close to −1 indicates a strong negative linear association."},
+      {s:"Analyze",q:"Which test compares the means of two independent groups when the response is continuous and approximately normal?",o:["Two-sample t-test","Chi-square test","One-proportion test","Levene test only"],a:0,e:"A two-sample t-test assesses a difference between two independent population means."},
+      {s:"Analyze",q:"Which test compares the means of four independent groups when assumptions are satisfied?",o:["Paired t-test","One-way ANOVA","Two-proportion test","Mood's median test only"],a:1,e:"One-way ANOVA tests whether at least one of several independent group means differs."},
+      {s:"Analyze",q:"Which test assesses association between two categorical variables?",o:["Chi-square test of independence","Pearson correlation","One-sample t-test","Simple linear regression"],a:0,e:"The chi-square test of independence uses count data in a contingency table."},
+      {s:"Analyze",q:"In hypothesis testing, a Type I error occurs when the analyst does what?",o:["Fails to reject a false null hypothesis","Rejects a true null hypothesis","Rejects a false null hypothesis","Uses a large sample"],a:1,e:"A Type I error is a false positive: rejecting H0 when H0 is true."},
+      {s:"Analyze",q:"In hypothesis testing, a Type II error occurs when the analyst does what?",o:["Fails to reject a false null hypothesis","Rejects a true null hypothesis","Uses alpha = 0.05","Collects continuous data"],a:0,e:"A Type II error is a false negative: not detecting a real effect."},
+      {s:"Analyze",q:"If p = 0.012 and alpha = 0.05, what is the correct decision?",o:["Reject the null hypothesis","Fail to reject the null hypothesis","Prove the null hypothesis","Increase p to 0.05"],a:0,e:"Because p is less than alpha, the observed result is statistically significant at the 5% level."},
+      {s:"Analyze",q:"What does a 95% confidence interval for a mean difference that excludes zero suggest?",o:["No practical difference exists","A statistically significant difference at about alpha = 0.05","The data contain no variation","The null hypothesis is certainly true"],a:1,e:"For a two-sided test, excluding zero corresponds to statistical significance near the 5% level."},
+      {s:"Analyze",q:"Statistical power is the probability of doing what?",o:["Rejecting a false null hypothesis","Rejecting a true null hypothesis","Making a Type I error","Proving normality"],a:0,e:"Power is the probability that a test detects an effect that really exists."},
+      {s:"Analyze",q:"Which change generally increases the power of a hypothesis test?",o:["Use a smaller sample","Increase measurement noise","Increase sample size","Lower the true effect size"],a:2,e:"A larger sample normally reduces standard error and makes a real effect easier to detect."},
+      {s:"Analyze",q:"In simple linear regression, what does R-squared describe?",o:["The slope direction only","The proportion of response variation explained by the model","The number of outliers","The measurement resolution"],a:1,e:"R-squared is the fraction of observed response variation explained by the fitted model."},
+      {s:"Analyze",q:"A residual plot shows a clear funnel shape. What problem does this suggest?",o:["Constant variance","Nonconstant variance","Perfect randomization","No relationship"],a:1,e:"A widening or narrowing residual spread suggests heteroscedasticity, or nonconstant variance."},
+      {s:"Analyze",q:"A regression model includes two predictors that are strongly correlated with each other. What issue can result?",o:["Multicollinearity","Autocorrelation only","Perfect capability","Measurement bias only"],a:0,e:"Multicollinearity can inflate coefficient uncertainty and make individual effects difficult to interpret."},
+      {s:"Analyze",q:"Which nonparametric test is a common alternative to the two-sample t-test for independent groups?",o:["Mann–Whitney test","McNemar test","F-test for variance","Pearson chi-square only"],a:0,e:"The Mann–Whitney test compares two independent groups without requiring normal response data."},
+      {s:"Analyze",q:"Which test is appropriate for before-and-after continuous measurements on the same subjects when differences are approximately normal?",o:["Paired t-test","Two-sample t-test","Chi-square test","One-proportion test"],a:0,e:"The observations are paired because each subject supplies a before and an after value."},
+      {s:"Analyze",q:"What is the null hypothesis in a one-way ANOVA?",o:["All population means are equal","All sample means are different","All variances are zero","The response is categorical"],a:0,e:"ANOVA starts with the null hypothesis that every group has the same population mean."},
+      {s:"Analyze",q:"A significant ANOVA result tells the team what?",o:["Every group differs from every other group","At least one population mean differs","The largest sample mean is the cause","All data are normal"],a:1,e:"ANOVA identifies evidence of some mean difference. Follow-up comparisons locate the differences."},
+
+      {s:"Improve",q:"What is the main purpose of a designed experiment?",o:["Change factors systematically to estimate effects on a response","Display the project schedule","Document customer complaints","Calculate financial savings only"],a:0,e:"DOE uses planned factor changes to learn causal effects efficiently."},
+      {s:"Improve",q:"In a designed experiment, an interaction between factors A and B means what?",o:["Factor A has no effect","The effect of A depends on the level of B","A and B have the same average","The response has no variation"],a:1,e:"An interaction exists when one factor's effect changes across levels of another factor."},
+      {s:"Improve",q:"Why is randomization used in an experiment?",o:["To reduce bias from lurking variables and time order","To guarantee a significant result","To remove the need for replication","To widen specifications"],a:0,e:"Random run order helps spread uncontrolled influences across treatment combinations."},
+      {s:"Improve",q:"Why are experimental runs replicated?",o:["To estimate experimental error and improve precision","To avoid measuring the response","To replace randomization","To remove every interaction"],a:0,e:"Replication provides independent observations at the same settings and supports an estimate of random error."},
+      {s:"Improve",q:"What is blocking in a designed experiment?",o:["Grouping similar experimental units to control a known nuisance source","Deleting failed runs","Using only one factor","Stopping the experiment early"],a:0,e:"Blocking separates a nuisance source, such as day or batch, from treatment effects."},
+      {s:"Improve",q:"A full factorial experiment has four factors at two levels each. How many treatment combinations are required before replication?",o:["8","12","16","32"],a:2,e:"A two-level full factorial has 2^k combinations. With four factors, 2^4 = 16."},
+      {s:"Improve",q:"What is confounding in a fractional factorial design?",o:["Two or more effects cannot be estimated separately","The response is always categorical","Every factor is insignificant","The experiment has no center points"],a:0,e:"Fractionation aliases effects, so some effects are combined and cannot be separated without more runs."},
+      {s:"Improve",q:"What can center points help detect in a two-level experiment?",o:["Curvature in the response","Only measurement bias","The project sponsor","Customer segmentation"],a:0,e:"Center-point results can reveal curvature that a simple first-order model does not represent."},
+      {s:"Improve",q:"What is the main purpose of a pilot test?",o:["Test a proposed solution on a limited scale before full implementation","Replace all process data","Guarantee customer acceptance","Set corporate strategy"],a:0,e:"A pilot reduces implementation risk and provides evidence that the solution works in practice."},
+      {s:"Improve",q:"In FMEA, which three ratings are traditionally multiplied to calculate the risk priority number?",o:["Cost, time, and scope","Severity, occurrence, and detection","Mean, median, and mode","Accuracy, precision, and resolution"],a:1,e:"Traditional RPN equals severity × occurrence × detection."},
+      {s:"Improve",q:"Which FMEA item should receive urgent attention even if its RPN is not the highest?",o:["A failure mode with very high severity","A failure mode with low severity and low occurrence","A cosmetic preference only","A step with no customer impact"],a:0,e:"High-severity risks, especially safety or regulatory risks, require attention independent of rank alone."},
+      {s:"Improve",q:"What is poka-yoke?",o:["A method that prevents an error or makes it immediately obvious","A financial review","A sampling plan","A regression assumption"],a:0,e:"Poka-yoke is mistake-proofing built into the work or process."},
+      {s:"Improve",q:"Which Lean method reduces setup time by moving tasks from internal to external setup where possible?",o:["SMED","5S","Kanban","Heijunka"],a:0,e:"Single-Minute Exchange of Die separates and converts setup work to reduce changeover time."},
+      {s:"Improve",q:"What is the main objective of 5S?",o:["Create and maintain an organized, visual workplace","Calculate process capability","Approve capital spending","Test a population mean"],a:0,e:"5S supports workplace organization, visual control, cleanliness, and standard work."},
+      {s:"Improve",q:"Which Lean waste is created when products wait between process steps?",o:["Motion","Inventory","Overprocessing","Defects"],a:1,e:"Work waiting between steps is work-in-process inventory, which also increases lead time."},
+      {s:"Improve",q:"What is takt time?",o:["Available production time divided by customer demand","Total defects divided by units","Setup time divided by operators","Cycle time plus all rework"],a:0,e:"Takt time is the pace required to match available production time with customer demand."},
+      {s:"Improve",q:"A process has 420 available minutes per day and demand is 140 units. What is takt time?",o:["0.33 minute per unit","2 minutes per unit","3 minutes per unit","60 minutes per unit"],a:2,e:"Takt time = 420 / 140 = 3 minutes per unit."},
+      {s:"Improve",q:"What does a pull system do?",o:["Produces based on downstream demand","Produces to maximize local machine use","Eliminates all inspection","Sets wider specifications"],a:0,e:"A pull system authorizes work from actual downstream need instead of forecast-driven overproduction."},
+      {s:"Improve",q:"Which solution-selection method uses weighted criteria to compare alternatives?",o:["Decision matrix","Histogram","Gage R&R","Run chart"],a:0,e:"A weighted decision matrix scores alternatives against agreed criteria and their importance."},
+      {s:"Improve",q:"What should a team do immediately before full solution deployment?",o:["Confirm pilot results, risks, resources, and implementation responsibilities","Delete the baseline data","Remove the process owner","Stop measuring the response"],a:0,e:"A deployment decision needs evidence, managed risks, resources, ownership, and a clear plan."},
+
+      {s:"Control",q:"What is the primary purpose of a control plan?",o:["Define how key inputs and outputs will be monitored and controlled","List all rejected ideas","Replace process procedures","Calculate the project charter"],a:0,e:"A control plan states what to measure, how often, by whom, limits, and response actions."},
+      {s:"Control",q:"Which item is essential in a reaction plan?",o:["Actions and escalation steps for an out-of-control condition","The original brainstorming notes","A list of every project meeting","The marketing budget"],a:0,e:"A reaction plan tells operators what to do, whom to notify, and how to protect customers when a signal occurs."},
+      {s:"Control",q:"A point falls above the upper control limit. What should the process owner do first?",o:["Treat it as a special-cause signal and follow the reaction plan","Widen the control limits immediately","Ignore it if the product is within specification","Adjust every future observation"],a:0,e:"A point beyond a control limit is evidence of a special cause that requires the defined response."},
+      {s:"Control",q:"What is overcontrol or tampering?",o:["Adjusting a stable process in response to common-cause variation","Ignoring all special causes","Using an automatic control system","Reducing measurement error"],a:0,e:"Unnecessary adjustment to common-cause noise can increase process variation."},
+      {s:"Control",q:"Which chart should monitor the number of defective units when every sample contains exactly 200 units?",o:["np chart","p chart only","u chart","I-MR chart"],a:0,e:"An np chart monitors the count of defective units when sample size is constant."},
+      {s:"Control",q:"Which chart should monitor the number of defects on equal-size inspection areas?",o:["c chart","p chart","X-bar chart","np chart"],a:0,e:"A c chart monitors defect counts when the area of opportunity is constant."},
+      {s:"Control",q:"For subgrouped continuous data, what does the X-bar chart monitor?",o:["Changes in process location","The count of defects","The proportion defective","Measurement-system bias"],a:0,e:"The X-bar chart tracks subgroup averages and signals changes in process center."},
+      {s:"Control",q:"For small subgroups of continuous data, what does the R chart monitor?",o:["Within-subgroup variation","Customer demand","The process median only","Defects per unit"],a:0,e:"The range chart tracks short-term variation inside each rational subgroup."},
+      {s:"Control",q:"Why should the team review the variation chart before interpreting the X-bar chart?",o:["An unstable within-subgroup variation estimate can make X-bar limits unreliable","The X-bar chart has no center line","The R chart proves capability","The R chart sets specifications"],a:0,e:"The X-bar control limits depend on the within-subgroup variation estimate."},
+      {s:"Control",q:"A stable process is not capable of meeting specifications. What is the correct action?",o:["Improve the process mean, variation, or both","Recalculate wider control limits","Inspect one more unit","Assume the customer limits are wrong"],a:0,e:"Stability alone does not ensure capability. The underlying process must change to meet specifications reliably."},
+      {s:"Control",q:"What is the best evidence that an improvement is sustained?",o:["Stable performance at the improved level over a suitable period","One good result after implementation","A team member's opinion","A new project name"],a:0,e:"Sustained results require enough time-series evidence to show that performance remains at the new level."},
+      {s:"Control",q:"Who should normally own the process after DMAIC project closure?",o:["The operational process owner","The Black Belt forever","The external customer","The data analyst only"],a:0,e:"The operational process owner accepts the controls and remains responsible for ongoing performance."},
+      {s:"Control",q:"What is standard work?",o:["The documented current best method for performing a process consistently","A list of statistical formulas","A supplier contract only","An annual financial target"],a:0,e:"Standard work defines the agreed sequence, method, timing, and expected conditions for repeatable performance."},
+      {s:"Control",q:"What is visual management designed to do?",o:["Make process status and abnormalities easy to see","Hide performance from operators","Replace all training","Increase batch size"],a:0,e:"Visual controls communicate normal conditions, status, and problems at the point of work."},
+      {s:"Control",q:"Which method supports periodic verification that process controls still work?",o:["Layered process audit","Affinity diagram","Nominal group technique","Scatter plot"],a:0,e:"Layered audits use scheduled checks by different management levels to confirm control execution."},
+      {s:"Control",q:"When should control limits normally be recalculated after an improvement?",o:["After the process reaches a new stable operating condition","After every data point","Only when a point is within limits","Before collecting post-change data"],a:0,e:"New limits should represent the stable improved process, not a mixture of old and new conditions."},
+      {s:"Control",q:"What is the main purpose of a project handoff?",o:["Transfer ownership, controls, documents, and response duties to operations","Return all gains to the baseline","Remove the process owner","Stop data collection permanently"],a:0,e:"A formal handoff makes ongoing responsibility and control actions clear."},
+      {s:"Control",q:"Which metric best checks whether a faster process caused a quality trade-off?",o:["A balancing quality metric such as defect rate","Only cycle time","Only labor hours","The number of meetings"],a:0,e:"A balancing metric detects an unwanted effect created by optimizing the primary measure."},
+      {s:"Control",q:"What should happen when an audited control-plan check is repeatedly missed?",o:["Find and correct the system cause, then restore accountability","Delete the check without review","Change the historical data","Ignore it while output is within specification"],a:0,e:"Repeated noncompliance needs root-cause action because the control system itself is failing."},
+      {s:"Control",q:"Which activity is appropriate at project closure?",o:["Validate benefits, record lessons, transfer ownership, and recognize the team","Create an untested solution","Change the original baseline","Remove all documentation"],a:0,e:"Closure confirms results and ownership and preserves knowledge for future work."}
+    ];
+
+    const quiz = document.querySelector("#quiz");
+    const progress = document.querySelector("#progress");
+    const progressText = document.querySelector("#progressText");
+    const scoreText = document.querySelector("#scoreText");
+    const notice = document.querySelector("#notice");
+    const letters = ["A", "B", "C", "D"];
+
+    let section = "";
+    questions.forEach((item, index) => {
+      if (item.s !== section) {
+        section = item.s;
+        quiz.insertAdjacentHTML("beforeend", `<h2 class="section-title">${section}</h2>`);
+      }
+      const fieldset = document.createElement("fieldset");
+      fieldset.id = `question-${index + 1}`;
+      fieldset.innerHTML = `
+        <legend><span class="number">${index + 1}.</span> ${item.q}</legend>
+        <div class="choices">
+          ${item.o.map((option, optionIndex) => `
+            <label>
+              <input type="radio" name="q${index}" value="${optionIndex}">
+              <span><strong>${letters[optionIndex]}.</strong> ${option}</span>
+            </label>`).join("")}
+        </div>
+        <p class="feedback" aria-live="polite"></p>`;
+      quiz.append(fieldset);
+    });
+
+    function updateProgress() {
+      const answered = quiz.querySelectorAll("input:checked").length;
+      progress.value = answered;
+      progressText.textContent = `${answered} of ${questions.length} answered`;
+    }
+
+    quiz.addEventListener("change", () => {
+      updateProgress();
+      notice.className = "notice";
+    });
+
+    document.querySelector("#verifyButton").addEventListener("click", () => {
+      let correct = 0;
+      let answered = 0;
+
+      questions.forEach((item, index) => {
+        const fieldset = document.querySelector(`#question-${index + 1}`);
+        const selected = fieldset.querySelector("input:checked");
+        const labels = [...fieldset.querySelectorAll("label")];
+        const feedback = fieldset.querySelector(".feedback");
+        labels.forEach(label => label.classList.remove("answer-correct", "answer-wrong"));
+        fieldset.classList.remove("correct", "wrong", "unanswered");
+
+        if (!selected) {
+          feedback.classList.remove("show");
+          feedback.textContent = "";
+        } else if (Number(selected.value) === item.a) {
+          answered++;
+          correct++;
+          fieldset.classList.add("correct");
+          labels[item.a].classList.add("answer-correct");
+          feedback.innerHTML = `<strong>Correct.</strong> ${item.e}`;
+          feedback.classList.add("show");
+        } else {
+          answered++;
+          fieldset.classList.add("wrong");
+          labels[item.a].classList.add("answer-correct");
+          selected.closest("label").classList.add("answer-wrong");
+          feedback.innerHTML = `<strong>Incorrect.</strong> Correct answer: ${letters[item.a]}. ${item.e}`;
+          feedback.classList.add("show");
+        }
+      });
+
+      const percent = answered ? Math.round(correct / answered * 100) : 0;
+      scoreText.textContent = answered
+        ? `Selected answers: ${correct}/${answered} correct (${percent}%)`
+        : "Select at least one answer to verify.";
+      notice.className = `notice show ${answered && correct === answered ? "success" : "result"}`;
+      notice.textContent = !answered
+        ? "No answer is selected."
+        : correct === answered
+          ? `All ${answered} selected answers are correct.`
+          : `${correct} of ${answered} selected answers are correct. Review the marked selections.`;
+    });
+
+    document.querySelector("#resetButton").addEventListener("click", () => {
+      quiz.reset();
+      document.querySelectorAll("fieldset").forEach(fieldset => fieldset.className = "");
+      document.querySelectorAll("label").forEach(label => label.classList.remove("answer-correct", "answer-wrong"));
+      document.querySelectorAll(".feedback").forEach(feedback => {
+        feedback.className = "feedback";
+        feedback.textContent = "";
+      });
+      scoreText.textContent = "Complete the questions, then verify your answers.";
+      notice.className = "notice";
+      updateProgress();
+      window.scrollTo({top:0, behavior:"smooth"});
+    });
+
+    if (questions.length !== 100 || questions.some(item => item.o.length !== 4 || item.a < 0 || item.a > 3)) {
+      throw new Error("Quiz data validation failed.");
+    }
+  </script>
+</body>
+</html>
