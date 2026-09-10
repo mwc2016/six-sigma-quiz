@@ -4,37 +4,37 @@ Checked on 10 September 2026.
 
 ## Content
 
-- The original 100 question records are unchanged, including answer options and explanations. Their existing saved-answer IDs are retained.
-- Five new topic sets contain 150 questions each: 750 new questions and 850 total.
-- The new sets contain 150 mathematical question families, with five different data cases in each family. A family is confined to one new tab. These are focused calculation practice sets, not five complete mock exams or 750 unrelated concepts.
-- No question text is repeated across the 850 records. The automated check also removes numerical values and checks that new problem templates do not repeat across tabs.
-- Each new question has four distinct choices, one answer key, a worked explanation, a reference link, and an IASSC topic code.
-- All 750 new numerical keys were checked in a separate calculation pass in `check-quiz.mjs`. The displayed key must also match the result in the explanation.
-- New content was checked against the [IASSC Black Belt body of knowledge](https://iassc.org/body-of-knowledge/black-belt-body-of-knowledge/). Acceptance sampling and project scheduling were removed from the draft. Regression is classified under Improve; FMEA under Measure. References explain the methods; the numerical exercises are original.
-- [NIST statistical methods](https://www.itl.nist.gov/div898/handbook/) support the statistical formulas. [ASQ Lean resources](https://asq.org/quality-resources/lean) support Lean terminology. ASQ is a supplementary reference, not the exam target.
+- The old question bank was removed.
+- Two SSI practice tabs contain 150 questions each.
+- Each tab has 10 categories with exactly 15 questions per category.
+- Tab 1 mixes concepts, practical decisions, and calculations.
+- Tab 2 contains 130 practical scenarios, 15 calculations, and 5 concept questions.
+- Every question has four distinct choices, one answer key, an explanation, a question type, and an SSI source link.
+- The bank contains 300 unique question stems and unique IDs.
+- Project questions cover the SSI examination, Passing Certificate, real or simulated project routes, VIVA, documents, savings requirement, professional registration, and CPD.
+- The questions are original practice items. They are not official examination questions.
 
 ## Application checks
 
 Run from this folder:
 
-```sh
-python3 build-bank.py
-node check-quiz.mjs
-```
+    python3 build-bank.py
+    node check-quiz.mjs
 
-The build writes fixed question data into both HTML files. The quiz works without network access. It does not fetch question data at runtime.
+The build writes fixed question data into question-bank.json and embeds the same data into index.html and dist/index.html. The quiz works without network access. It uses source links only when an explanation is opened.
 
 The checks cover:
 
-- HTML JavaScript syntax and matching source/distribution files.
-- Question totals, unique IDs, distinct choices, answer calculations, and source/scope fields.
-- Retention of old saved answers; separate answers and random order for each set.
-- Answer entry, grading, reset, and keyboard tab selection.
-- Separate timer values, focus and visibility changes, page close, reload, freezing, resuming, and timer restart.
-- No elapsed time is added while the page is closed or hidden.
-- Timer restart retains answers; answer reset retains the timer.
-- Invalid saved data and unavailable browser storage.
+- Matching source and distribution HTML files.
+- Two 150-question tabs.
+- Ten categories with 15 questions in each tab.
+- Unique question IDs and stems.
+- Four distinct choices and valid answer keys.
+- SSI source fields and question types.
+- Independently checked sample calculation keys.
+- Answer entry, grading, reset, random order, keyboard tab selection, and category headings.
+- Separate answers and timers for each tab.
+- Timer pause and resume for focus, visibility, page close, freeze, and reload.
+- Browser-storage failure and invalid saved-time handling.
 
-Controller tests use a small DOM/event stand-in and an injected clock. They do not constitute manual tests of every browser's minimize event. The application uses native focus, visibility, and page-lifecycle events. Time is saved every second while running and on pause; an abrupt process kill can lose the fraction of time since the last save. Storage belongs to the browser and site origin. Opening a local file does not migrate progress from a hosted URL.
-
-The existing hosted site was not republished as part of this local HTML edit.
+SSI requirements can change. The question explanations link to the SSI pages used for this bank; candidates should confirm requirements for their course cohort.
